@@ -39,4 +39,8 @@ export class Posts implements OnInit {
       }
     ];
   }
+
+  onHidePost(postToHide: Post): void {
+    this.posts = this.posts.filter(post => post.id !== postToHide.id);
+  }
 }
