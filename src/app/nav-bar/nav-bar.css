@@ -1,0 +1,25 @@
+.nav-container {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  margin-bottom: 2rem;
+}
+
+.nav-container a {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  text-decoration: none;
+  color: #6c757d;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-container a:hover {
+  color: #007bff;
+  background-color: #e9ecef;
+}
+
+.nav-container a.active {
+  color: #007bff;
+  background-color: #e9ecef;
+  font-weight: bold;
+}

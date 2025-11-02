@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-history',
-  imports: [],
+  standalone: true,
   templateUrl: './history.html',
-  styleUrl: './history.css',
+  styleUrls: ['./history.css']
 })
 export class History {
-
+  title = 'History';
 }
