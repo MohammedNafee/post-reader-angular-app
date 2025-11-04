@@ -1,11 +1,13 @@
-<h3>{{ post.title }}</h3>
-<p>{{ post.body }}</p>
-<small>Votes: {{ post.votes }}</small>
-<br /> <br />
-<button (click)="upvotePost(post)">Upvote</button>
+<div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.body }}</p>
+    <small>Votes: {{ post.votes }}</small>
+    <br /> <br />
+    <button class="btn btn-primary" style="margin-right: 10px;" (click)="upvotePost(post)">Upvote</button>
 
-<button (click)="downvotePost(post)">Downvote</button>
+    <button class="btn btn-primary" style="margin-right: 10px;" (click)="downvotePost(post)">Downvote</button>
 
-<!-- Hide post button -->
-<button (click)="hide(post)">Hide Post</button>
-<br />
+    <!-- Hide post button -->
+    <button class="btn btn-primary" style="margin-right: 10px;" (click)="hide(post)">Hide Post</button>
+    <br />
+</div>
