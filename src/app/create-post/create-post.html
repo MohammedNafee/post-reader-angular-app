@@ -1,12 +1,17 @@
-<form (ngSubmit)="onSubmit()">
+<!-- Create Post Form -->
+<!-- Bind the form submission to onSubmit method -->
+<!-- Reference the form using template variable createPostForm -->
+<form #createPostForm="ngForm" (ngSubmit)="onSubmit()">
     <h1>Create a New Post</h1>
     <div>
         <label for="title">Title:</label>
-        <input id="title" name="title" [(ngModel)]="title" required />
+        <input id="title" name="title" [(ngModel)]="title" minlength="8" maxlength="20" required />
     </div>
     <div>
         <label for="body">Body:</label>
         <textarea id="body" name="body" [(ngModel)]="body" required></textarea>
     </div>
-    <button type="submit">Create Post</button>
+    <!-- Submit button -->
+     <!-- Disable the button if the form is invalid -->
+    <button type="submit" [disabled]="createPostForm.invalid">Create Post</button>
 </form>
