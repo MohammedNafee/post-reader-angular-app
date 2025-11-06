@@ -1,148 +1,115 @@
 # Post Reader
 
-A modern Angular application for reading and managing posts, built with standalone components and the latest Angular features.
+Small, modern Angular application for reading and creating posts. This repository uses Angular's standalone component style and demonstrates basic SPA routing, HTTP usage, and forms.
 
-## 📋 Features
+![Project status](https://img.shields.io/badge/status-active-brightgreen)
 
-- **Post Management**: View and interact with posts
-- **History Tracking**: Track post reading history
-- **Modern UI**: Clean and responsive design with Bootstrap-inspired styling
-- **Standalone Components**: Uses Angular's modern standalone component architecture
-- **SPA Routing**: Full Single Page Application with client-side routing
+## Quick Links
+- Repository: https://github.com/MohammedNafee/post-reader-angular-app
 
-## 🏗️ Architecture
+## Features
+- View posts fetched from a public API
+- Create new posts locally (client-side)
+- Simple history page and navigation
+- Standalone components and signal-based state
 
-### Technology Stack
-- **Framework**: Angular 17+
-- **Styling**: CSS with modern flexbox/grid layouts
-- **Routing**: Angular Router with standalone components
-- **State Management**: Signal-based state management
-- **Component Architecture**: Fully standalone components
+## Getting started
 
-### Key Components
-- `App`: Root component with routing setup
-- `Posts`: Main post listing component
-- `History`: Post reading history tracker
-- `NavBar`: Navigation component with active route highlighting
-- `PostItem`: Individual post display component
+Prerequisites
+- Node.js (LTS recommended)
+- npm
 
-## 🚀 Getting Started
+Clone and install
 
-### Prerequisites
-- Node.js (v18 or later)
-- npm (v9 or later)
-- Angular CLI (v17 or later)
-
-### Installation
-
-1. Clone the repository:
 ```bash
 git clone https://github.com/MohammedNafee/post-reader-angular-app.git
 cd post-reader
-```
-
-2. Install dependencies:
-```bash
 npm install
 ```
 
-3. Start the development server:
+Run development server
+
 ```bash
+npm start
+# or
 ng serve
 ```
 
-4. Open your browser and navigate to `http://localhost:4200`
+Open http://localhost:4200 in your browser.
 
-## 💻 Development
+If dependency installation fails with peer-dependency errors, you can try a clean install using the legacy resolver as a temporary workaround:
 
-### Development Server
-
-Start the development server:
-```bash
-ng serve
+```powershell
+rm -Recurse -Force node_modules
+rm package-lock.json
+npm install --legacy-peer-deps
 ```
 
-The app will automatically reload when you change any source files.
+## Useful NPM scripts
 
-### Code Generation
+- `npm start` — start dev server (ng serve)
+- `npm run build` — build production bundle
+- `npm run test` — run unit tests
+- `npm run watch` — build in watch mode
+- `npm run serve:ssr:post-reader` — run SSR server (if built)
 
-Generate new components:
-```bash
-ng generate component component-name
-```
-
-Other generation commands:
-```bash
-ng generate directive|pipe|service|class|guard|interface|enum|module
-```
-
-### Building for Production
-
-Create a production build:
-```bash
-ng build --configuration production
-```
-
-The build artifacts will be stored in the `dist/` directory.
-
-### Running Tests
-
-Execute unit tests:
-```bash
-ng test
-```
-
-Run end-to-end tests:
-```bash
-ng e2e
-```
-
-## 🌳 Project Structure
+## Project structure
 
 ```
 src/
 ├── app/
-│   ├── app.ts                 # Root component
-│   ├── app.html              # Root template
-│   ├── app.css               # Root styles
-│   ├── app.routes.ts         # Route definitions
-│   ├── app.config.ts         # App configuration
-│   ├── models/              
-│   │   └── Post.ts           # Post interface
-│   ├── posts/                # Posts feature
-│   ├── history/              # History feature
-│   └── nav-bar/             # Navigation component
-├── assets/                   # Static assets
-└── styles.css               # Global styles
+│   ├── app.ts             # Root standalone component
+│   ├── app.html           # Root template with <router-outlet>
+│   ├── app.config.ts      # Application providers (provideRouter, provideHttpClient)
+│   ├── app.routes.ts      # Standalone route definitions
+│   ├── posts/             # Posts feature
+│   ├── post-item/         # Post item component
+│   ├── create-post/       # Create post form component
+│   ├── history/           # History page component
+│   └── nav-bar/           # Navigation component
+├── assets/
+└── styles.css
 ```
 
-## 🛠️ Configuration
+## Notes for developers
 
-The application uses several configuration files:
-- `angular.json`: Angular CLI configuration
-- `tsconfig.json`: TypeScript configuration
-- `package.json`: Project dependencies and scripts
+- Standalone components declare `standalone: true` and list other standalone components, directives, pipes, or NgModules in their `imports` array.
+- To use `HttpClient` in a standalone app, `provideHttpClient()` is registered in `app.config.ts` (this project does that). You may also import `HttpClientModule` into a top-level NgModule or component imports when not using `provideHttpClient`.
+- To use template-driven forms (ngModel), import `FormsModule` in the component `imports` array (not `NgModel` directly). For reactive forms, import `ReactiveFormsModule`.
 
-## 📚 Additional Resources
+## Common issues & troubleshooting
 
-- [Angular Documentation](https://angular.dev)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs)
-- [Angular CLI Documentation](https://angular.dev/tools/cli)
+- NG8001 "is not a known element": ensure the child component is either declared in an NgModule or imported as a standalone component in the parent component's `imports` array.
+- NG0303 "Can't bind to 'ngForOf'": import `CommonModule` into a standalone component that uses structural directives like `*ngFor` / `*ngIf`.
+- NG0201 "No provider found for _HttpClient": make sure `provideHttpClient()` is present in `app.config.ts` or that `HttpClientModule` is imported from `@angular/common/http`.
+- npm ERESOLVE dependency errors: try `npm install --legacy-peer-deps` as a temporary step, or align `@angular/*` package versions to the same patch version.
+- `@angular/flex-layout` compatibility: this project avoids `flex-layout`; prefer native CSS flexbox/grid instead of adding beta packages that may not match the Angular version.
 
-## 📝 Contributing
+## How to add a new standalone component
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/YourFeature`
-3. Commit your changes: `git commit -am 'Add YourFeature'`
-4. Push to the branch: `git push origin feature/YourFeature`
-5. Submit a pull request
+```bash
+ng generate component my-feature --standalone
+```
 
-## 📄 License
+Then include the component in the parent by adding it to the `imports` array:
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+```ts
+@Component({
+	standalone: true,
+	imports: [RouterOutlet, MyFeatureComponent]
+})
+```
 
-## ✨ Acknowledgments
+## Contributing
 
-- Angular team for the excellent framework
-- Contributors and maintainers
-- The open-source community
+1. Fork the repo
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Commit changes and open a PR
+
+## License
+
+MIT
+
+---
+
+If you'd like, I can add screenshots, a demo link, or CI badges (GitHub Actions) — tell me what you prefer and I'll add them.
