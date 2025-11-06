@@ -18,8 +18,15 @@ export class Posts implements OnInit {
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    // Initialization logic can go here
-    this.posts = this.postService.getPosts();
+    // Fetch posts from the service
+    // Subscribe to the observable to get the data
+    this.postService.getPosts().subscribe(res => {
+      for (let index = 0; index < res.length; index++) {
+        const post = res[index];
+        post['votes'] = Math.floor(Math.random() * 100); // Assign random votes
+      }
+      this.posts = [...res];
+    });
   }
 
   onHidePost(postToHide: Post): void {

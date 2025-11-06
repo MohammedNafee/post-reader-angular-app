@@ -1,35 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Post as PostModel } from '../models/Post';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Post {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   // Simulated method to fetch posts
   // In a real application, this might make an HTTP request to a backend service
-  getPosts() {
-    return [
-      { 
-        id: 1, 
-        title: 'First Post', 
-        body: 'This is the first post.',
-        votes: 0
-      },
-      {
-        id: 2,
-        title: 'Second Post',
-        body: 'This is the second post.',
-        votes: 0
-      },
-      {
-        id: 3,
-        title: 'Third Post',
-        body: 'This is the third post.',
-        votes: 0
-      }
-    ];
+  getPosts(): Observable<PostModel[]> {
+    return this.http.get<PostModel[]>('https://jsonplaceholder.typicode.com/posts');
   }
 
 }
