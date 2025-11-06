@@ -2,11 +2,12 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { NavBar } from './nav-bar/nav-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NavBar, HttpClientModule],
+  imports: [RouterOutlet, RouterLink, NavBar, HttpClientModule, FormsModule],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })

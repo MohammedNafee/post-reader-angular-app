@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Post } from '../models/Post';
 import { PostItem } from '../post-item/post-item';
 import { Post as PostService } from '../services/post';
+import { CreatePost } from '../create-post/create-post';
 
 @Component({
   selector: 'app-posts',
   standalone: true,
-  imports: [CommonModule, PostItem],
+  imports: [CommonModule, PostItem, CreatePost],
   templateUrl: './posts.html',
   styleUrls: ['./posts.css'],
 })
@@ -31,5 +32,10 @@ export class Posts implements OnInit {
 
   onHidePost(postToHide: Post): void {
     this.posts = this.posts.filter(post => post.id !== postToHide.id);
+  }
+
+  onPostCreated(newPost: Post): void {
+    this.posts = [newPost, ...this.posts];
+    alert('New post added successfully!');  
   }
 }
